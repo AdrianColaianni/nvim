@@ -151,9 +151,6 @@ autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
 vim.keymap.set("n", "S", ":%s//g<Left><Left>")
 -- vim.keymap.set("x", "<leader>P", "\"+p")
 
--- LuaSnip binding
-vim.cmd("imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'")
-
 vim.keymap.set("", "<C-h>", "<C-w>h")
 vim.keymap.set("", "<C-j>", "<C-w>j")
 vim.keymap.set("", "<C-k>", "<C-w>k")
