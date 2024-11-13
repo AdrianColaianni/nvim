@@ -1,11 +1,23 @@
 vim.cmd('set clipboard=unnamedplus')
-vim.g.mapleader = " "
 
--- Must be loaded quickly
+-- Must be loaded before plugins
+
+vim.g.mapleader = " "
 vim.g.vimwiki_folding = 'expr'
 vim.g.vimwiki_ext2syntax = {['.Rmd']= 'markdown', ['.rmd']= 'markdown',['.md']= 'markdown', ['.markdown']= 'markdown', ['.mdown']= 'markdown'}
 vim.g.vimwiki_list = {{path = '~/Nextcloud/Notes/', path_html = '~/Nextcloud/Notes/html/', syntax = 'markdown', ext = '.md'}}
 
+vim.g.netrw_browse_split = 0
+vim.g.netrw_banner = 0
+vim.g.netrw_winsize = 25
+vim.g.netrw_liststyle = 3
+-- Hide dotfiles
+vim.g.netrw_list_hide = '\\(^\\|\\s\\s\\)\\zs\\.\\S\\+'
+
+vim.g.user_emmet_leader_key = ','
+vim.g.user_emmet_mode='a'
+
+vim.g.instant_username = "Adrian"
 --------------------------------------------------------------------------------
 -----Lazy-----------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -28,7 +40,7 @@ plugins = {
 		dependencies = { 'nvim-lua/plenary.nvim' }
 	},
 	{ 'rose-pine/neovim', name = 'rose-pine' },
-	{{"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"}},
+	{{"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"}}, -- Has caused vim to segfault
 	'theprimeagen/harpoon',
 	'mbbill/undotree',
 	'tpope/vim-fugitive',
@@ -51,11 +63,29 @@ plugins = {
 	'vimwiki/vimwiki',
 	'farmergreg/vim-lastplace',
 	'ap/vim-css-color',
-	'nvim-orgmode/orgmode',
 	'jbyuki/instant.nvim',
 
-	{ 'mlochbaum/BQN', dir = '/home/sandman/Developer/BQN/editors/vim' },
-	'https://git.sr.ht/~detegr/nvim-bqn',
+	'mattn/emmet-vim',
+	'preservim/nerdtree',
+	'HiPhish/jinja.vim',
+
+	{
+		"christoomey/vim-tmux-navigator",
+		cmd = {
+			"TmuxNavigateLeft",
+			"TmuxNavigateDown",
+			"TmuxNavigateUp",
+			"TmuxNavigateRight",
+			"TmuxNavigatePrevious",
+		},
+		keys = {
+			{ "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+			{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+			{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+			{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+		},
+	},
 }
 
 require("lazy").setup(plugins, opts)
@@ -66,7 +96,7 @@ require("lazy").setup(plugins, opts)
 vim.opt.foldlevelstart = 99
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.go = 'a'
+-- vim.opt.go = 'a'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.laststatus = 0
@@ -92,11 +122,6 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 -- vim.opt.colorcolumn = "80"
-vim.g.instant_username = "Adrian"
-
-vim.g.netrw_browse_split = 0
-vim.g.netrw_banner = 0
-vim.g.netrw_winsize = 25
 
 local augroup = vim.api.nvim_create_augroup
 local ThePrimeagenGroup = augroup('ThePrimeagen', {})
@@ -125,8 +150,37 @@ autocmd({"BufWritePre"}, {
     command = "%s/\\s\\+$//e",
 })
 
+-- ANSIBLE VAULT
+vim.api.nvim_set_keymap('n', '<leader>av', ':!ansible-vault encrypt %<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>au', ':!ansible-vault decrypt %<CR>', { noremap = true, silent = true })
+-- function vault_close()
+-- 	local cmd = 'ansible-vault encrypt ' .. vim.api.nvim_buf_get_name(0) .. ' &'
+-- 	vim.fn.system(cmd)
+-- end
+-- function vault_open()
+-- 	local first_line = vim.fn.getline(1)
+-- 	if first_line:find('ANSIBLE_VAULT') then
+-- 		local cmd = 'ansible-vault decrypt ' .. vim.api.nvim_buf_get_name(0)
+-- 		vim.fn.system(cmd)
+-- 		vim.cmd('edit!')
+-- 		autocmd('BufWinLeave', {
+-- 			pattern = '*.yml',
+-- 			callback = vault_close,
+-- 		})
+-- 	end
+-- end
+-- autocmd('BufReadPost', {
+-- 	pattern = '*.yml',
+-- 	callback = vault_open,
+-- })
+
 
 vim.cmd([[
+" Netrw
+set nocp
+filetype plugin on
+
+" Skeleton files
 autocmd BufNew,BufNewFile,BufRead *.rkt* setlocal ft=racket
 
 augroup skeletons
@@ -134,8 +188,11 @@ au!
 autocmd BufNewFile *.* silent! execute '0r ~/.config/nvim/templates/skeleton.'.expand("<afile>:e")
 augroup END
 
+" auto compile & refresh dwmblocks
+autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
+
 " define line highlight color
-highlight LineHighlight ctermbg=black guibg=black
+highlight LineHighlight guibg=#26233a
 " highlight the current line
 nnoremap <silent> <Leader>l :call matchadd('LineHighlight', '\%'.line('.').'l')<CR>
 " clear all the highlighted lines
@@ -143,6 +200,9 @@ nnoremap <silent> <Leader>L :call clearmatches()<CR>
 
 autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
 autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
+
+" Set filetype to ansible when in an ansible repo
+autocmd BufRead,BufNewFile, *ansible*/*.yml,*ansible*/*.yaml set filetype=yaml.ansible
 ]])
 
 --------------------------------------------------------------------------------
@@ -151,15 +211,15 @@ autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
 vim.keymap.set("n", "S", ":%s//g<Left><Left>")
 -- vim.keymap.set("x", "<leader>P", "\"+p")
 
-vim.keymap.set("", "<C-h>", "<C-w>h")
-vim.keymap.set("", "<C-j>", "<C-w>j")
-vim.keymap.set("", "<C-k>", "<C-w>k")
-vim.keymap.set("", "<C-l>", "<C-w>l")
+-- Now controlled by christoomey/vim-tmux-navigator
+-- vim.keymap.set("", "<C-h>", "<C-w>h")
+-- vim.keymap.set("", "<C-j>", "<C-w>j")
+-- vim.keymap.set("", "<C-k>", "<C-w>k")
+-- vim.keymap.set("", "<C-l>", "<C-w>l")
 
 vim.keymap.set("", "<leader>c", ":w! | !compiler \"<c-r>%\"<CR>")
 vim.keymap.set("", "<leader>p", ":!opout <c-r>%<CR><CR>")
 
-vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")

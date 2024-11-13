@@ -57,12 +57,28 @@ lsp['luau_lsp'].setup{
 	flags = lsp_flags,
 	on_attach = on_attach,
 }
-lsp['pyright'].setup{
+lsp['pylsp'].setup{
 	capabilities = capabilities,
 	flags = lsp_flags,
 	on_attach = on_attach,
 }
 lsp['jdtls'].setup{
+	capabilities = capabilities,
+	flags = lsp_flags,
+	on_attach = on_attach,
+}
+-- requires vscode-html-languageserver package
+lsp['html'].setup{
+	capabilities = capabilities,
+	flags = lsp_flags,
+	on_attach = on_attach,
+}
+lsp['ts_ls'].setup{
+	capabilities = capabilities,
+	flags = lsp_flags,
+	on_attach = on_attach,
+}
+lsp['ansiblels'].setup{
 	capabilities = capabilities,
 	flags = lsp_flags,
 	on_attach = on_attach,
