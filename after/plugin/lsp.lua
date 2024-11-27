@@ -57,7 +57,7 @@ lsp['luau_lsp'].setup{
 	flags = lsp_flags,
 	on_attach = on_attach,
 }
-lsp['pylsp'].setup{
+lsp['ruff'].setup{
 	capabilities = capabilities,
 	flags = lsp_flags,
 	on_attach = on_attach,
