@@ -204,6 +204,9 @@ autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
 
 " Set filetype to ansible when in an ansible repo
 autocmd BufRead,BufNewFile, *ansible*/*.yml,*ansible*/*.yaml set filetype=yaml.ansible
+
+" Set filetype for xtx
+autocmd BufRead,BufNewFile, *.xtx set filetype=tex
 ]])
 
 --------------------------------------------------------------------------------
