@@ -56,7 +56,7 @@ plugins = {
 	'hrsh7th/nvim-cmp',
 
 	"tpope/vim-commentary",
-	'github/copilot.vim',
+	-- 'github/copilot.vim',
 	'junegunn/goyo.vim',
 	'tpope/vim-speeddating',
 	'tpope/vim-surround',
