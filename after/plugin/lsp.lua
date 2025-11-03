@@ -31,55 +31,14 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
-local lsp = require('lspconfig')
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-capabilities.offsetEncoding = { 'utf-16' }
-local lsp_flags = {
-	-- This is the default in Nvim 0.7+
-	debounce_text_changes = 150,
-}
-lsp['clangd'].setup{
-	capabilities = capabilities,
-	flags = lsp_flags,
-	on_attach = on_attach,
-}
-lsp['rust_analyzer'].setup{
-	capabilities = capabilities,
-	flags = lsp_flags,
-	on_attach = on_attach,
-	-- Server-specific settings...
-	settings = {
-		["rust-analyzer"] = {}
-	}
-}
-lsp['luau_lsp'].setup{
-	capabilities = capabilities,
-	flags = lsp_flags,
-	on_attach = on_attach,
-}
-lsp['ruff'].setup{
-	capabilities = capabilities,
-	flags = lsp_flags,
-	on_attach = on_attach,
-}
-lsp['jdtls'].setup{
-	capabilities = capabilities,
-	flags = lsp_flags,
-	on_attach = on_attach,
-}
--- requires vscode-html-languageserver package
-lsp['html'].setup{
-	capabilities = capabilities,
-	flags = lsp_flags,
-	on_attach = on_attach,
-}
-lsp['ts_ls'].setup{
-	capabilities = capabilities,
-	flags = lsp_flags,
-	on_attach = on_attach,
-}
-lsp['ansiblels'].setup{
-	capabilities = capabilities,
-	flags = lsp_flags,
-	on_attach = on_attach,
-}
+vim.lsp.enable('clangd')
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('luau_lsp')
+vim.lsp.enable('ruff')
+vim.lsp.enable('basedpyright')
+vim.lsp.enable('jdtls')
+vim.lsp.enable('html')
+vim.lsp.enable('ts_ls')
+vim.lsp.enable('ansiblels')
+vim.lsp.enable('bashls')
+vim.lsp.enable('ocamllsp')
