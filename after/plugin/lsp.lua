@@ -44,3 +44,16 @@ vim.lsp.enable('bashls')
 vim.lsp.enable('ocamllsp')
 vim.lsp.enable('svelte')
 vim.lsp.enable('arduino_language_server')
+vim.lsp.config.arduino_language_server = {
+    cmd = {
+        '/usr/bin/arduino-language-server',
+        '-clangd',
+        '/usr/bin/clangd',
+        '-cli',
+        '/usr/bin/arduino-cli',
+        '-cli-config',
+        '$HOME/.arduino15/arduino-cli.yaml',
+        '-fqbn',
+        'esp32:esp32:esp32'
+    }
+}
