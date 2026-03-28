@@ -14,8 +14,8 @@ vim.g.netrw_liststyle = 3
 -- Hide dotfiles
 vim.g.netrw_list_hide = '\\(^\\|\\s\\s\\)\\zs\\.\\S\\+'
 
-vim.g.user_emmet_leader_key = ','
-vim.g.user_emmet_mode='a'
+-- vim.g.user_emmet_leader_key = ','
+-- vim.g.user_emmet_mode='a'
 
 vim.g.instant_username = "Adrian"
 --------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ plugins = {
 	'ap/vim-css-color',
 	'jbyuki/instant.nvim',
 
-	'mattn/emmet-vim',
+	-- 'mattn/emmet-vim',
 	'preservim/nerdtree',
 	'HiPhish/jinja.vim',
 
