@@ -167,6 +167,11 @@ augroup RestoreCursor
 augroup END
 ]])
 
+-- Vimwiki settigns
+--vim.g.vimwiki_folding = 'expr'
+vim.g.vimwiki_ext2syntax = {['.Rmd']= 'markdown', ['.rmd']= 'markdown',['.md']= 'markdown', ['.markdown']= 'markdown', ['.mdown']= 'markdown'}
+vim.g.vimwiki_list = {{path = '~/Nextcloud/Notes/', path_html = '~/Nextcloud/Notes/html/', syntax = 'markdown', ext = '.md'}}
+
 ---@type vim.Option
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
@@ -186,6 +191,10 @@ require('lazy').setup({
   -- NOTE: Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
   { 'NMAC427/guess-indent.nvim', opts = {} },
   { 'tpope/vim-fugitive' },
+  { 'junegunn/goyo.vim' },
+  { 'tpope/vim-speeddating' },
+  { 'tpope/vim-surround' },
+  { 'vimwiki/vimwiki' },
 
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
