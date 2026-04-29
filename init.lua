@@ -201,6 +201,11 @@ require('lazy').setup({
       vim.keymap.set("", "<leader>n", ":NERDTreeToggle<cr>")
     end
   },
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    opts = {},
+  },
 
   -- See `:help gitsigns` to understand what the configuration keys do
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
