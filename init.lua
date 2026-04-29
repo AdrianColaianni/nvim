@@ -153,6 +153,20 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then error('Error cloning lazy.nvim:\n' .. out) end
 end
 
+-- Restore file position on file open.  See :help last-position-jump
+vim.cmd([[
+augroup RestoreCursor
+  autocmd!
+  autocmd BufReadPre * autocmd FileType <buffer> ++once
+    \ let s:line = line("'\"")
+    \ | if s:line >= 1 && s:line <= line("$") && &filetype !~# 'commit'
+    \      && index(['xxd', 'gitrebase'], &filetype) == -1
+    \      && !&diff
+    \ |   execute "normal! g`\""
+    \ | endif
+augroup END
+]])
+
 ---@type vim.Option
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
