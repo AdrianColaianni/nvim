@@ -167,6 +167,12 @@ augroup RestoreCursor
 augroup END
 ]])
 
+-- Set tab size to 4 & spaces instead of tabs
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+vim.cmd("autocmd BufWritePre * retab!")
+
 -- Vimwiki settigns
 --vim.g.vimwiki_folding = 'expr'
 vim.g.vimwiki_ext2syntax = {['.Rmd']= 'markdown', ['.rmd']= 'markdown',['.md']= 'markdown', ['.markdown']= 'markdown', ['.mdown']= 'markdown'}
