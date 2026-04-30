@@ -255,6 +255,12 @@ require('lazy').setup({
       { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
   },
+  {
+    'mbbill/undotree',
+    keys = {
+      { '<leader>u', '<cmd>UndotreeToggle<cr>' },
+    },
+  },
 
   -- See `:help gitsigns` to understand what the configuration keys do
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
