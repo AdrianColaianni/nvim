@@ -150,8 +150,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then error('Error cloning lazy.nvim:\n' .. out) end
 end
 
--- Restore file position on file open.  See :help last-position-jump
 vim.cmd([[
+"Restore file position on file open.  See :help last-position-jump
 augroup RestoreCursor
   autocmd!
   autocmd BufReadPre * autocmd FileType <buffer> ++once
@@ -161,6 +161,14 @@ augroup RestoreCursor
     \      && !&diff
     \ |   execute "normal! g`\""
     \ | endif
+augroup END
+
+" Skeleton files
+autocmd BufNew,BufNewFile,BufRead *.rkt* setlocal ft=racket
+
+augroup skeletons
+au!
+autocmd BufNewFile *.* silent! execute '0r ~/.config/nvim/templates/skeleton.'.expand("<afile>:e")
 augroup END
 ]])
 

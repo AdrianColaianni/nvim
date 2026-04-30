@@ -1,0 +1,9 @@
+setlocal spell spelllang=en_us
+set wrap linebreak nolist
+set signcolumn=no
+vmap j gj
+vmap k gk
+vmap ^ g^
+nmap j gj
+nmap k gk
+nmap ^ g^
