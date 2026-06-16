@@ -176,7 +176,7 @@ augroup END
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
-vim.cmd("autocmd BufWritePre * retab!")
+--vim.cmd("autocmd BufWritePre * retab!")
 
 -- Vimwiki settigns
 --vim.g.vimwiki_folding = 'expr'
@@ -228,9 +228,16 @@ require('lazy').setup({
   { 'tpope/vim-surround' },
   { 'vimwiki/vimwiki' },
   {
-    'preservim/nerdtree',
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons", -- optional, but recommended
+    },
+    lazy = false, -- neo-tree will lazily load itself
     config = function()
-      vim.keymap.set("", "<leader>n", ":NERDTreeToggle<cr>")
+      vim.keymap.set("", "<leader>n", ":Neotree toggle current reveal_force_cwd position=left<cr>");
     end
   },
   {
@@ -604,7 +611,7 @@ require('lazy').setup({
       --  See `:help lsp-config` for information about keys and how to configure
       ---@type table<string, vim.lsp.Config>
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
